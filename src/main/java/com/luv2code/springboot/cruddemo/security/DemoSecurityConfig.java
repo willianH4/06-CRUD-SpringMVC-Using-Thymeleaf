@@ -40,7 +40,11 @@ public class DemoSecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		
 		httpSecurity.authorizeHttpRequests(configurer ->
-			configurer.anyRequest().authenticated()
+			configurer
+				.requestMatchers("/").hasRole("EMPLOYEE")
+				.requestMatchers("/employees/list").hasRole("MANAGER")
+				.requestMatchers("/employees/**").hasRole("ADMIN")
+				.anyRequest().authenticated()
 		)
 		.formLogin(form -> 
 			form
