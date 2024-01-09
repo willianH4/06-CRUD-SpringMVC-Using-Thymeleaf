@@ -24,7 +24,7 @@ public class DemoSecurityConfig {
 		UserDetails maria = User.builder()
 				.username("maria")
 				.password("{noop}test123")
-				.roles("EMPLOYEE","MANAGER")
+				.roles("EMPLOYEE","ADMIN")
 				.build();
 		
 		UserDetails susan = User.builder()
@@ -54,7 +54,9 @@ public class DemoSecurityConfig {
 			)
 		
 		.logout(logout -> logout.permitAll()
-				
+			)
+		.exceptionHandling(configurer -> 
+				configurer.accessDeniedPage("/access-denied")
 		);
 		
 		return httpSecurity.build();
